@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Rhino Plugins - Professional CAD Tools</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #f59e0b;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f9fafb;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        /* Header & Navigation */
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--accent-color);
+            color: var(--white);
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--text-dark);
+        }
+
+        /* Plugin Grid */
+        .plugins-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .plugin-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .plugin-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        .plugin-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: var(--bg-light);
+        }
+
+        .plugin-content {
+            padding: 1.5rem;
+        }
+
+        .plugin-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .plugin-content p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .plugin-link {
+            display: inline-block;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .plugin-link:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Features Section */
+        .features {
+            background: var(--bg-light);
+            padding: 4rem 2rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-box {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-box h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: var(--white);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .contact-info {
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            font-size: 1.1rem;
+        }
+
+        .contact-item a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .plugins-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">YourBrand Plugins</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#plugins">Plugins</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <h1>Professional Rhino Plugins</h1>
+        <p>Save time and create beautiful designs with our parametric tools</p>
+        <a href="#plugins" class="cta-button">Explore Plugins</a>
+    </section>
+
+    <!-- Plugins Section -->
+    <section id="plugins" class="container">
+        <h2 class="section-title">Our Plugins</h2>
+        <div class="plugins-grid">
+            
+            <!-- Plugin 1 - REPLACE WITH YOUR DETAILS -->
+            <div class="plugin-card">
+                <img src="images/plugin1-preview.jpg" alt="Plugin 1" class="plugin-image">
+                <div class="plugin-content">
+                    <h3>Parametric Cutter Pro</h3>
+                    <p>Create beautiful cutters instantly with adjustable parameters. Save hours of manual modeling time.</p>
+                    <a href="plugin1.html" class="plugin-link">Learn More →</a>
+                </div>
+            </div>
+
+            <!-- Plugin 2 - REPLACE WITH YOUR DETAILS -->
+            <div class="plugin-card">
+                <img src="images/plugin2-preview.jpg" alt="Plugin 2" class="plugin-image">
+                <div class="plugin-content">
+                    <h3>Advanced Pattern Tool</h3>
+                    <p>Generate complex patterns with precise control. Perfect for architectural and jewelry design.</p>
+                    <a href="plugin2.html" class="plugin-link">Learn More →</a>
+                </div>
+            </div>
+
+            <!-- Plugin 3 - REPLACE WITH YOUR DETAILS -->
+            <div class="plugin-card">
+                <img src="images/plugin3-preview.jpg" alt="Plugin 3" class="plugin-image">
+                <div class="plugin-content">
+                    <h3>Smart Modifier Suite</h3>
+                    <p>Automate repetitive tasks with intelligent modifiers. Boost your productivity instantly.</p>
+                    <a href="plugin3.html" class="plugin-link">Learn More →</a>
+                </div>
+            </div>
+
+            <!-- Add more plugin cards as needed -->
+
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <h2 class="section-title">Why Choose Our Plugins?</h2>
+        <div class="features-grid">
+            <div class="feature-box">
+                <div class="feature-icon">⚡</div>
+                <h3>Time-Saving</h3>
+                <p>Reduce modeling time by up to 80% with automated workflows</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">🎨</div>
+                <h3>Beautiful Results</h3>
+                <p>Generate professional-quality outputs instantly</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">🔧</div>
+                <h3>Easy to Use</h3>
+                <p>Intuitive interface designed for all skill levels</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">🔄</div>
+                <h3>Regular Updates</h3>
+                <p>Continuous improvements and new features</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-info">
+            <div class="contact-item">
+                <span>📧</span>
+                <a href="mailto:support@yourplugins.com">support@yourplugins.com</a>
+            </div>
+            <div class="contact-item">
+                <span>📱</span>
+                <a href="tel:+1234567890">+1 (234) 567-890</a>
+            </div>
+            <div class="contact-item">
+                <span>💬</span>
+                <span>Response within 24 hours</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 YourBrand Plugins. All rights reserved.</p>
+        <p>Built for Rhino 3D professionals</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plugin Name - Rhino Plugin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f9fafb;
+            --white: #ffffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        /* Header */
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Plugin Hero */
+        .plugin-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 4rem 2rem;
+        }
+
+        .plugin-hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .plugin-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .plugin-hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Features List */
+        .features-section {
+            background: var(--white);
+        }
+
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-item {
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            background: var(--bg-light);
+            border-radius: 8px;
+        }
+
+        .feature-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Gallery */
+        .gallery-section {
+            background: var(--bg-light);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background: var(--white);
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            background: var(--white);
+            text-align: center;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 2rem auto;
+        }
+
+        .pricing-card {
+            background: var(--white);
+            border: 2px solid var(--bg-light);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary-color);
+            position: relative;
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-color);
+            color: var(--white);
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .price-period {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .price-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .price-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--bg-light);
+        }
+
+        .price-features li:before {
+            content: "✓ ";
+            color: var(--success-color);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .buy-button {
+            display: inline-block;
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        .buy-button:hover {
+            background: var(--secondary-color);
+        }
+
+        .featured .buy-button {
+            background: var(--accent-color);
+        }
+
+        .featured .buy-button:hover {
+            background: #d97706;
+        }
+
+        /* Technical Specs */
+        .specs-section {
+            background: var(--bg-light);
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .spec-box {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .spec-box strong {
+            display: block;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .plugin-hero-content {
+                grid-template-columns: 1fr;
+            }
+
+            .plugin-hero h1 {
+                font-size: 2rem;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">YourBrand Plugins</a>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#plugins">Plugins</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Plugin Hero -->
+    <section class="plugin-hero">
+        <div class="plugin-hero-content">
+            <div>
+                <h1>Parametric Cutter Pro</h1>
+                <p>Create beautiful cutters instantly with adjustable parameters. Save hours of manual modeling time and achieve perfect results every time.</p>
+                <a href="#pricing" class="buy-button" style="display: inline-block; width: auto;">Get Started Now</a>
+            </div>
+            <div class="video-container">
+                <!-- REPLACE with your YouTube embed code -->
+                <!-- Example: <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe> -->
+                <div class="video-placeholder">▶️</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section container">
+        <h2 class="section-title">Key Features</h2>
+        <div class="features-list">
+            <div class="feature-item">
+                <h3>⚡ Instant Generation</h3>
+                <p>Create complex cutters in seconds with one click. No manual modeling required.</p>
+            </div>
+            <div class="feature-item">
+                <h3>🎛️ Full Parameter Control</h3>
+                <p>Adjust dimensions, angles, and patterns with intuitive sliders and inputs.</p>
+            </div>
+            <div class="feature-item">
+                <h3>💾 Save Presets</h3>
+                <p>Store your favorite configurations for quick reuse on future projects.</p>
+            </div>
+            <div class="feature-item">
+                <h3>🔄 Real-time Preview</h3>
+                <p>See changes instantly as you adjust parameters. WYSIWYG workflow.</p>
+            </div>
+            <div class="feature-item">
+                <h3>📐 Precision Engineering</h3>
+                <p>All outputs are mathematically perfect with exact dimensions.</p>
+            </div>
+            <div class="feature-item">
+                <h3>🎨 Multiple Styles</h3>
+                <p>Choose from various design templates or create your own custom styles.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section container">
+        <h2 class="section-title">Gallery</h2>
+        <div class="gallery-grid">
+            <!-- REPLACE images with your screenshots -->
+            <div class="gallery-item">
+                <img src="images/plugin1-screenshot1.jpg" alt="Example 1">
+            </div>
+            <div class="gallery-item">
+                <img src="images/plugin1-screenshot2.jpg" alt="Example 2">
+            </div>
+            <div class="gallery-item">
+                <img src="images/plugin1-screenshot3.jpg" alt="Example 3">
+            </div>
+            <div class="gallery-item">
+                <img src="images/plugin1-screenshot4.jpg" alt="Example 4">
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing-section container">
+        <h2 class="section-title">Choose Your Plan</h2>
+        <div class="pricing-grid">
+            
+            <div class="pricing-card">
+                <h3>Quarterly</h3>
+                <div class="price">$49</div>
+                <div class="price-period">per 3 months</div>
+                <ul class="price-features">
+                    <li>Full plugin access</li>
+                    <li>All features included</li>
+                    <li>Regular updates</li>
+                    <li>Email support</li>
+                    <li>Cancel anytime</li>
+                </ul>
+                <a href="https://gumroad.com/yourlink" class="buy-button">Subscribe Now</a>
+            </div>
+
+            <div class="pricing-card featured">
+                <div class="pricing-badge">BEST VALUE</div>
+                <h3>Annual</h3>
+                <div class="price">$149</div>
+                <div class="price-period">per year (Save 20%)</div>
+                <ul class="price-features">
+                    <li>Full plugin access</li>
+                    <li>All features included</li>
+                    <li>Priority updates</li>
+                    <li>Priority support</li>
+                    <li>Free future plugins</li>
+                </ul>
+                <a href="https://gumroad.com/yourlink" class="buy-button">Subscribe Now</a>
+            </div>
+
+            <div class="pricing-card">
+                <h3>Half-Yearly</h3>
+                <div class="price">$89</div>
+                <div class="price-period">per 6 months (Save 10%)</div>
+                <ul class="price-features">
+                    <li>Full plugin access</li>
+                    <li>All features included</li>
+                    <li>Regular updates</li>
+                    <li>Email support</li>
+                    <li>Cancel anytime</li>
+                </ul>
+                <a href="https://gumroad.com/yourlink" class="buy-button">Subscribe Now</a>
+            </div>
+
+        </div>
+        <p style="margin-top: 2rem; color: var(--text-light);">
+            💡 7-day free trial • 30-day money-back guarantee • Secure payment via Gumroad
+        </p>
+    </section>
+
+    <!-- Technical Specs -->
+    <section class="specs-section container">
+        <h2 class="section-title">Technical Specifications</h2>
+        <div class="specs-grid">
+            <div class="spec-box">
+                <strong>Compatibility</strong>
+                <p>Rhino 6, 7, 8</p>
+            </div>
+            <div class="spec-box">
+                <strong>Platform</strong>
+                <p>Windows & Mac</p>
+            </div>
+            <div class="spec-box">
+                <strong>File Size</strong>
+                <p>5 MB</p>
+            </div>
+            <div class="spec-box">
+                <strong>License</strong>
+                <p>Single User</p>
+            </div>
+            <div class="spec-box">
+                <strong>Updates</strong>
+                <p>Free Forever</p>
+            </div>
+            <div class="spec-box">
+                <strong>Support</strong>
+                <p>Email & Video</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 YourBrand Plugins. All rights reserved.</p>
+        <p>Questions? Contact us at <a href="mailto:support@yourplugins.com" style="color: var(--accent-color);">support@yourplugins.com</a></p>
+    </footer>
+</body>
+</html>
